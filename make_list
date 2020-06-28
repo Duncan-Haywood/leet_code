@@ -1,0 +1,57 @@
+import numpy as np
+import random
+def make_list(length=10):
+	"""
+	:type length: int
+	:rtype: numpy.array(List[int])
+	:dependencies: numpy, random
+	creates a np.array with length random integers between 0,length (inclusive) 
+	"""
+	arr = np.array([random.randint(0,length) for i in range(length)])
+	return arr
+def rand_i(length=10):
+	"""
+	:type length: int
+	:rtype: List[int]
+	return an starting int index between [0,length) in list form
+	"""
+	i = random.randint(0, length-1)
+	return [i]
+def binary_search(arr, index_list):
+	"""
+	:type arr: numpy.array(List[int])
+	:type index_list: List[int]
+	:rtype: bool
+	returns true when arr[i]==0
+	returns false when repeat index, or out of bounds moving both left and right.
+	"""
+	print("ir",index_list)
+	i = index_list[-1]
+	print("i", i)
+	x =  arr[i]
+	if x == 0:
+		return True
+	left = i - x
+	right = i + x
+	if left>=0 and left<len(arr) and left not in index_list:
+		left_index_list = index_list.append(left)
+		print("left",left_index_list)
+		bs = binary_search(arr,left_index_list)
+		if bs:
+			return True
+	if right>=0 and right<len(arr) and right not in index_list:
+		right_index_list=index_list.append(right)
+		bs = binary_search(arr,right_index_list)
+		if bs:
+			return True
+	return False
+def test():
+	length = 10
+	for x in range(100):
+		arr = make_list(length)
+		print(arr)
+		i = rand_i(length)
+		bs = binary_search(arr, i)
+		print(bs)
+
+test()
